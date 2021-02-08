@@ -24,7 +24,7 @@ class ViewController: NSViewController {
         self.timer = Timer.scheduledTimer(withTimeInterval: 1/30,
                                           repeats: true,
                                           block: { (_) in
-                                            let edgeSize = 25
+                                            let edgeSize = 50
                                             var grid: [[NSColor]] = []
 
                                             for _ in 0..<edgeSize {
