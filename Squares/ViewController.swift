@@ -6,21 +6,46 @@
 //
 
 import Cocoa
+import AppKit
 
 class ViewController: NSViewController {
+
+    private var squaresView: SquaresView?
+
+    private var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let squaresView = SquaresView()
+        self.view.addSubview(squaresView)
+        self.squaresView = squaresView
+
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1/30,
+                                          repeats: true,
+                                          block: { (_) in
+                                            let edgeSize = 25
+                                            var grid: [[NSColor]] = []
+
+                                            for _ in 0..<edgeSize {
+                                                var row : [NSColor] = []
+                                                for _ in 0..<edgeSize {
+                                                    let color = NSColor(red: CGFloat(arc4random_uniform(255))/255.0,
+                                                                        green: CGFloat(arc4random_uniform(255))/255.0,
+                                                                        blue: CGFloat(arc4random_uniform(255))/255.0,
+                                                                        alpha: 1)
+                                                    row.append(color)
+                                                }
+                                                grid.append(row)
+                                            }
+
+                                            self.squaresView?.xyGrid = grid
+                                          })
     }
 
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
+    override func viewWillLayout() {
+        super.viewWillLayout()
+        self.squaresView?.frame = self.view.bounds
     }
-
-
 }
 

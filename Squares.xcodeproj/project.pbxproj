@@ -11,6 +11,7 @@
 		276B9B6925D1F3A00071C376 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276B9B6825D1F3A00071C376 /* ViewController.swift */; };
 		276B9B6B25D1F3A20071C376 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 276B9B6A25D1F3A20071C376 /* Assets.xcassets */; };
 		276B9B6E25D1F3A20071C376 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 276B9B6C25D1F3A20071C376 /* Main.storyboard */; };
+		276B9B7925D1F3D30071C376 /* SquaresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276B9B7825D1F3D30071C376 /* SquaresView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		276B9B6D25D1F3A20071C376 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		276B9B6F25D1F3A20071C376 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		276B9B7025D1F3A20071C376 /* Squares.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Squares.entitlements; sourceTree = "<group>"; };
+		276B9B7825D1F3D30071C376 /* SquaresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquaresView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 		276B9B6525D1F3A00071C376 /* Squares */ = {
 			isa = PBXGroup;
 			children = (
+				276B9B7725D1F3C30071C376 /* Squares View */,
 				276B9B6625D1F3A00071C376 /* AppDelegate.swift */,
 				276B9B6825D1F3A00071C376 /* ViewController.swift */,
 				276B9B6A25D1F3A20071C376 /* Assets.xcassets */,
@@ -61,6 +64,14 @@
 				276B9B7025D1F3A20071C376 /* Squares.entitlements */,
 			);
 			path = Squares;
+			sourceTree = "<group>";
+		};
+		276B9B7725D1F3C30071C376 /* Squares View */ = {
+			isa = PBXGroup;
+			children = (
+				276B9B7825D1F3D30071C376 /* SquaresView.swift */,
+			);
+			path = "Squares View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				276B9B6925D1F3A00071C376 /* ViewController.swift in Sources */,
+				276B9B7925D1F3D30071C376 /* SquaresView.swift in Sources */,
 				276B9B6725D1F3A00071C376 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
