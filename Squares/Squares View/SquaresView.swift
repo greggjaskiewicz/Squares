@@ -18,7 +18,7 @@ final class SquaresView: NSView {
     }
     
     override func draw(_ dirtyRect: NSRect) {
-        
+
         let grid = self.xyGrid
         
         // if empty - don't bother
@@ -29,7 +29,7 @@ final class SquaresView: NSView {
         guard ySize > 0 else {
             return
         }
-        
+    
         // sizes
         let rectSize = CGSize(width: self.frame.width/CGFloat((grid.count)),
                               height: self.frame.height/CGFloat(ySize))

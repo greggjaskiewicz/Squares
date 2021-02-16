@@ -43,22 +43,6 @@ final class GameOfLife {
     // advance the state
     public func evaluate() {
 
-
-        for (y, row) in self.board.enumerated() {
-
-            for (x, cell) in row.enumerated() {
-                if (cell.state == .willDie)
-                {
-                    self.board[x][y] = GameOfLifeCell(state: .dead)
-                }
-
-                if (cell.state == .willRevive)
-                {
-                    self.board[x][y] = GameOfLifeCell(state: .alive)
-                }
-            }
-        }
-
         for (y, row) in self.board.enumerated() {
 
             // pix
@@ -93,18 +77,33 @@ final class GameOfLife {
 
                 if cell.state == .alive {
                     if neighboursCount < 2 {
-                        self.board[x][y] = GameOfLifeCell(state: .willDie)
+                        self.board[y][x] = GameOfLifeCell(state: .willDie)
                     }
 
                     if neighboursCount > 3 {
-                        self.board[x][y] = GameOfLifeCell(state: .willDie)
+                        self.board[y][x] = GameOfLifeCell(state: .willDie)
                     }
                 } else {
                     if neighboursCount == 3 {
-                        self.board[x][y] = GameOfLifeCell(state: .willRevive)
+                        self.board[y][x] = GameOfLifeCell(state: .willRevive)
                     }
                 }
 
+            }
+        }
+
+        for (y, row) in self.board.enumerated() {
+
+            for (x, cell) in row.enumerated() {
+                if (cell.state == .willDie)
+                {
+                    self.board[x][y] = GameOfLifeCell(state: .dead)
+                }
+
+                if (cell.state == .willRevive)
+                {
+                    self.board[x][y] = GameOfLifeCell(state: .alive)
+                }
             }
         }
     }
