@@ -11,11 +11,11 @@ import AppKit
 class ViewController: NSViewController {
 
     private var squaresView: SquaresView?
-
     private var timer: Timer?
+    private static let edgeSize: UInt = 100
+    private let gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 45)
 
-    // in an ideal world - this would be in a separate class
-    private func provider() -> [[NSColor]] {
+    private func randomProvider() -> [[NSColor]] {
         let edgeSize = 50
         var grid: [[NSColor]] = []
 
@@ -27,6 +27,27 @@ class ViewController: NSViewController {
                                     blue: CGFloat(arc4random_uniform(255))/255.0,
                                     alpha: 1)
                 row.append(color)
+            }
+            grid.append(row)
+        }
+
+        return grid
+    }
+
+    private func provider() -> [[NSColor]] {
+        var grid: [[NSColor]] = []
+
+        let gameOfLifeGrid = self.gol.currentBoard()
+
+        for golRow in gameOfLifeGrid {
+            var row : [NSColor] = []
+            for xPix in golRow {
+
+                if xPix == true {
+                    row.append(.black)
+                } else {
+                    row.append(.white)
+                }
             }
             grid.append(row)
         }
@@ -47,6 +68,8 @@ class ViewController: NSViewController {
                                             guard let strongSelf = self else {
                                                 return
                                             }
+
+                                            strongSelf.gol.evaluate()
                                             strongSelf.squaresView?.xyGrid = strongSelf.provider()
                                           })
     }
@@ -56,4 +79,3 @@ class ViewController: NSViewController {
         self.squaresView?.frame = self.view.bounds
     }
 }
-

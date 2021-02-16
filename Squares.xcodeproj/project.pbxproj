@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2755CE3725DC26C600440982 /* GameOfLife.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755CE3625DC26C600440982 /* GameOfLife.swift */; };
 		276B9B6725D1F3A00071C376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276B9B6625D1F3A00071C376 /* AppDelegate.swift */; };
 		276B9B6925D1F3A00071C376 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276B9B6825D1F3A00071C376 /* ViewController.swift */; };
 		276B9B6B25D1F3A20071C376 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 276B9B6A25D1F3A20071C376 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2755CE3625DC26C600440982 /* GameOfLife.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLife.swift; sourceTree = "<group>"; };
 		276B9B6325D1F3A00071C376 /* Squares.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Squares.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		276B9B6625D1F3A00071C376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		276B9B6825D1F3A00071C376 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +38,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2755CE3525DC25DC00440982 /* Game Of Life */ = {
+			isa = PBXGroup;
+			children = (
+				2755CE3625DC26C600440982 /* GameOfLife.swift */,
+			);
+			path = "Game Of Life";
+			sourceTree = "<group>";
+		};
 		276B9B5A25D1F3A00071C376 = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +65,7 @@
 		276B9B6525D1F3A00071C376 /* Squares */ = {
 			isa = PBXGroup;
 			children = (
+				2755CE3525DC25DC00440982 /* Game Of Life */,
 				276B9B7725D1F3C30071C376 /* Squares View */,
 				276B9B6625D1F3A00071C376 /* AppDelegate.swift */,
 				276B9B6825D1F3A00071C376 /* ViewController.swift */,
@@ -145,6 +156,7 @@
 			files = (
 				276B9B6925D1F3A00071C376 /* ViewController.swift in Sources */,
 				276B9B7925D1F3D30071C376 /* SquaresView.swift in Sources */,
+				2755CE3725DC26C600440982 /* GameOfLife.swift in Sources */,
 				276B9B6725D1F3A00071C376 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
