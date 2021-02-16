@@ -15,7 +15,7 @@ class ViewController: NSViewController {
 
     private var timer: Timer?
     private static let edgeSize: UInt = 120
-    private var gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 5)
+    private var gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 35)
 
     private func randomProvider() -> [[NSColor]] {
         let edgeSize = ViewController.edgeSize
@@ -58,11 +58,13 @@ class ViewController: NSViewController {
     }
 
     @IBAction func reset(_ sender: AnyObject) {
-        self.gol =  GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 5)
+        self.gol =  GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 35)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.squaresView.xyGrid = self.provider()
 
         self.timer = Timer.scheduledTimer(withTimeInterval: 1/50,
                                           repeats: true,

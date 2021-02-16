@@ -30,7 +30,7 @@ final class GameOfLife {
             var row: [GameOfLifeCell] = []
             for _ in 0..<boardSize {
                 let chance = arc4random_uniform(100)
-                if chance >= populationPercentage {
+                if chance < populationPercentage {
                     row.append(GameOfLifeCell(state: .alive))
                 } else {
                     row.append(GameOfLifeCell(state: .dead))
@@ -43,11 +43,10 @@ final class GameOfLife {
     // advance the state
     public func evaluate() {
 
+
         for (y, row) in self.board.enumerated() {
 
-            // pix
             for (x, cell) in row.enumerated() {
-
                 if (cell.state == .willDie)
                 {
                     self.board[x][y] = GameOfLifeCell(state: .dead)
@@ -57,6 +56,13 @@ final class GameOfLife {
                 {
                     self.board[x][y] = GameOfLifeCell(state: .alive)
                 }
+            }
+        }
+
+        for (y, row) in self.board.enumerated() {
+
+            // pix
+            for (x, cell) in row.enumerated() {
 
                 var neighbours: [GameOfLifeCell] = []
                 // row
@@ -68,19 +74,19 @@ final class GameOfLife {
                 }
 
                 var nextIndex = 1
-                if (x == row.count) {
+                if (x == row.count-1) {
                     nextIndex = 0
                 }
 
                 // Y Bounds
                 if y != 0 {
-                    neighbours.append(contentsOf: self.board[y-1][(x+prevIndex)..<(x+nextIndex)])
+                    neighbours.append(contentsOf: self.board[y-1][(x+prevIndex)...(x+nextIndex)])
                 }
 
-                neighbours.append(contentsOf: row[(x+prevIndex)..<(x+nextIndex)])
+                neighbours.append(contentsOf: row[(x+prevIndex)...(x+nextIndex)])
 
                 if y != self.board.count-1 {
-                    neighbours.append(contentsOf: self.board[y+1][(x+prevIndex)..<(x+nextIndex)])
+                    neighbours.append(contentsOf: self.board[y+1][(x+prevIndex)...(x+nextIndex)])
                 }
 
                 let neighboursCount = neighbours.compactMap({ ($0.state == .alive) ? 1 : 0 }).reduce(0, +)
