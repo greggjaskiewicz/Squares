@@ -30,7 +30,7 @@ final class GameOfLife {
             var row: [GameOfLifeCell] = []
             for _ in 0..<boardSize {
                 let chance = arc4random_uniform(100)
-                if chance > populationPercentage {
+                if chance >= populationPercentage {
                     row.append(GameOfLifeCell(state: .alive))
                 } else {
                     row.append(GameOfLifeCell(state: .dead))
@@ -68,7 +68,7 @@ final class GameOfLife {
                 }
 
                 var nextIndex = 1
-                if (x == 0) {
+                if (x == row.count) {
                     nextIndex = 0
                 }
 

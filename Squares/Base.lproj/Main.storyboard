@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -673,7 +675,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Squares" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -703,11 +705,52 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Squares" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oba-JT-B90">
+                                <rect key="frame" x="134" y="1" width="69" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="wnd-0Z-1hJ"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="X4b-h2-2t5">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="reset:" target="XfG-lQ-9wD" id="GdQ-IN-9W4"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dNs-G6-s6L">
+                                <rect key="frame" x="13" y="1" width="123" height="32"/>
+                                <buttonCell key="cell" type="push" title="Pause/Resume" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vNo-KE-hee">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="xpl-Rm-IyN" customClass="SquaresView" customModule="Squares" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="36" width="480" height="234"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Oba-JT-B90" secondAttribute="bottom" constant="8" id="ApJ-uu-Cj9"/>
+                            <constraint firstItem="dNs-G6-s6L" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="EfJ-8a-BuM"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Oba-JT-B90" secondAttribute="trailing" constant="20" symbolic="YES" id="P3d-UU-BN9"/>
+                            <constraint firstItem="Oba-JT-B90" firstAttribute="top" secondItem="xpl-Rm-IyN" secondAttribute="bottom" constant="8" id="Wfz-Hb-y4X"/>
+                            <constraint firstItem="xpl-Rm-IyN" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="aMl-aw-G2Q"/>
+                            <constraint firstItem="Oba-JT-B90" firstAttribute="leading" secondItem="dNs-G6-s6L" secondAttribute="trailing" constant="12" symbolic="YES" id="c4A-lw-9Xp"/>
+                            <constraint firstAttribute="bottom" secondItem="dNs-G6-s6L" secondAttribute="bottom" constant="8" id="e0o-5A-o8I"/>
+                            <constraint firstItem="xpl-Rm-IyN" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="esz-bV-a6s"/>
+                            <constraint firstItem="Oba-JT-B90" firstAttribute="top" secondItem="xpl-Rm-IyN" secondAttribute="bottom" constant="8" id="gHb-5z-SAZ"/>
+                            <constraint firstAttribute="trailing" secondItem="xpl-Rm-IyN" secondAttribute="trailing" id="q2g-TH-EhC"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="playPauseButton" destination="dNs-G6-s6L" id="LOi-fZ-8sA"/>
+                        <outlet property="squaresView" destination="xpl-Rm-IyN" id="1iu-MI-9WB"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

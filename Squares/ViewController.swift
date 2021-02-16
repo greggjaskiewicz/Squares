@@ -10,13 +10,15 @@ import AppKit
 
 class ViewController: NSViewController {
 
-    private var squaresView: SquaresView?
+    @IBOutlet var squaresView: SquaresView!
+    @IBOutlet var playPauseButton: NSButton!
+
     private var timer: Timer?
-    private static let edgeSize: UInt = 100
-    private let gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 45)
+    private static let edgeSize: UInt = 120
+    private var gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 5)
 
     private func randomProvider() -> [[NSColor]] {
-        let edgeSize = 50
+        let edgeSize = ViewController.edgeSize
         var grid: [[NSColor]] = []
 
         for _ in 0..<edgeSize {
@@ -55,27 +57,27 @@ class ViewController: NSViewController {
         return grid
     }
 
+    @IBAction func reset(_ sender: AnyObject) {
+        self.gol =  GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 5)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let squaresView = SquaresView()
-        self.view.addSubview(squaresView)
-        self.squaresView = squaresView
-
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1/30,
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1/50,
                                           repeats: true,
                                           block: { [weak self] (_) in
                                             guard let strongSelf = self else {
                                                 return
                                             }
 
+                                            guard strongSelf.playPauseButton.state == .on else {
+                                                return
+                                            }
+
                                             strongSelf.gol.evaluate()
-                                            strongSelf.squaresView?.xyGrid = strongSelf.provider()
+                                            strongSelf.squaresView.xyGrid = strongSelf.provider()
                                           })
     }
 
-    override func viewWillLayout() {
-        super.viewWillLayout()
-        self.squaresView?.frame = self.view.bounds
-    }
 }
