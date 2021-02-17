@@ -730,7 +730,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="xpl-Rm-IyN" customClass="SquaresView" customModule="Squares" customModuleProvider="target">
+                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xpl-Rm-IyN" customClass="SquaresView" customModule="Squares" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="36" width="556" height="327"/>
                             </customView>
                         </subviews>

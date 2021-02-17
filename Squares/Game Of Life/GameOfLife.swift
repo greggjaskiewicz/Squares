@@ -28,7 +28,13 @@ final class GameOfLife {
         self.boardSize = boardSize
         for _ in 0..<self.boardSize {
             var row: [GameOfLifeCell] = []
-            for _ in 0..<self.boardSize {
+            for x in 0..<self.boardSize {
+
+//                if x < 4 {
+//                    row.append(GameOfLifeCell(state: .alive))
+//                    continue
+//                }
+
                 let chance = arc4random_uniform(100)
                 if chance > populationPercentage {
                     row.append(GameOfLifeCell(state: .alive))
@@ -54,30 +60,44 @@ final class GameOfLife {
 
                 // X Bounds
                 var prevIndex = -1
-                if (x == 0) {
+                if (y == 0) {
                     prevIndex = 0
                 }
 
                 var nextIndex = 1
-                if (x+1 == self.boardSize) {
+                if (y+1 == self.boardSize) {
                     nextIndex = 0
                 }
 
-                prevIndex += x
-                nextIndex += x
+                prevIndex += y
+                nextIndex += y
 
-                // Y Bounds
-                if y > 0 {
-                    neighbours.append(contentsOf: previousBoard[y-1][(prevIndex)...(nextIndex)])
+                let rows = previousBoard[(prevIndex)...(nextIndex)]
+
+                var xPrevIndex = -1
+                if (x == 0) {
+                    xPrevIndex = 0
                 }
 
-                neighbours.append(contentsOf: previousBoard[y][(prevIndex)...(nextIndex)])
-
-                if y+1 != self.boardSize {
-                    neighbours.append(contentsOf: previousBoard[y+1][(prevIndex)...(nextIndex)])
+                var xNextIndex = 1
+                if (x+1 == self.boardSize) {
+                    xNextIndex = 0
                 }
 
-                let neighboursCount = neighbours.compactMap({ ($0.state == .alive) ? 1 : 0 }).reduce(0, +)
+                xPrevIndex += x
+                xNextIndex += x
+
+                for row in rows {
+                    neighbours.append(contentsOf: row[(xPrevIndex)...(xNextIndex)])
+                }
+
+//                print("\(neighbours.count) \(x) \(y)")
+
+                var neighboursCount = neighbours.compactMap({ ($0.state == .alive) ? 1 : 0 }).reduce(0, +)
+
+                if previousBoard[y][x].state == .alive {
+                    neighboursCount -= 1
+                }
 
                 if previousBoard[y][x].state == .alive {
                     if neighboursCount < 2 {
@@ -100,6 +120,14 @@ final class GameOfLife {
 
         for y in 0..<self.boardSize {
             for x in 0..<self.boardSize {
+
+                if x < 4 {
+                    let chance = arc4random_uniform(100)
+                    if chance > 50 {
+                        self.board[y][x].state = .alive
+                    }
+                }
+
                 if (boardSnapshot[y][x].state == .willDie)
                 {
                     self.board[y][x].state = .dead

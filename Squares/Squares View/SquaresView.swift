@@ -33,12 +33,14 @@ final class SquaresView: NSView {
         // sizes
         let rectSize = CGSize(width: self.frame.width/CGFloat((grid.count)),
                               height: self.frame.height/CGFloat(ySize))
-        
+
         for (x, row) in grid.enumerated() {
             for (y, column) in row.enumerated() {
                 column.setFill()
-                NSRect(x: CGFloat(x)*rectSize.width, y: CGFloat(y)*rectSize.height,
-                       width: rectSize.width, height: rectSize.height).fill()
+                let x = CGFloat(x)*rectSize.width
+                let y = CGFloat(y)*rectSize.height
+                let rect = NSRect(origin: CGPoint(x: x, y: y), size: rectSize)
+                rect.fill()
             }
         }
 
