@@ -725,7 +725,7 @@
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dNs-G6-s6L">
                                 <rect key="frame" x="13" y="1" width="123" height="32"/>
-                                <buttonCell key="cell" type="push" title="Pause/Resume" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vNo-KE-hee">
+                                <buttonCell key="cell" type="push" title="Pause/Resume" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vNo-KE-hee">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>

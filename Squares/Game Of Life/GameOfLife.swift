@@ -21,16 +21,16 @@ private struct GameOfLifeCell {
 final class GameOfLife {
 
     private var board: [[GameOfLifeCell]] = []
-    private var boardSize: UInt
+    let boardSize: Int
 
-    init(boardSize: UInt, populationPercentage: UInt8) {
+    init(boardSize: Int, populationPercentage: UInt8) {
 
         self.boardSize = boardSize
-        for _ in 0..<boardSize {
+        for _ in 0..<self.boardSize {
             var row: [GameOfLifeCell] = []
-            for _ in 0..<boardSize {
+            for _ in 0..<self.boardSize {
                 let chance = arc4random_uniform(100)
-                if chance < populationPercentage {
+                if chance > populationPercentage {
                     row.append(GameOfLifeCell(state: .alive))
                 } else {
                     row.append(GameOfLifeCell(state: .dead))
@@ -43,11 +43,12 @@ final class GameOfLife {
     // advance the state
     public func evaluate() {
 
-        for (y, row) in self.board.enumerated() {
+        let previousBoard = self.board
+
+        for y in 0..<self.boardSize {
 
             // pix
-            for (x, cell) in row.enumerated() {
-
+            for x in 0..<self.boardSize {
                 var neighbours: [GameOfLifeCell] = []
                 // row
 
@@ -58,51 +59,55 @@ final class GameOfLife {
                 }
 
                 var nextIndex = 1
-                if (x == row.count-1) {
+                if (x+1 == self.boardSize) {
                     nextIndex = 0
                 }
 
+                prevIndex += x
+                nextIndex += x
+
                 // Y Bounds
-                if y != 0 {
-                    neighbours.append(contentsOf: self.board[y-1][(x+prevIndex)...(x+nextIndex)])
+                if y > 0 {
+                    neighbours.append(contentsOf: previousBoard[y-1][(prevIndex)...(nextIndex)])
                 }
 
-                neighbours.append(contentsOf: row[(x+prevIndex)...(x+nextIndex)])
+                neighbours.append(contentsOf: previousBoard[y][(prevIndex)...(nextIndex)])
 
-                if y != self.board.count-1 {
-                    neighbours.append(contentsOf: self.board[y+1][(x+prevIndex)...(x+nextIndex)])
+                if y+1 != self.boardSize {
+                    neighbours.append(contentsOf: previousBoard[y+1][(prevIndex)...(nextIndex)])
                 }
 
                 let neighboursCount = neighbours.compactMap({ ($0.state == .alive) ? 1 : 0 }).reduce(0, +)
 
-                if cell.state == .alive {
+                if previousBoard[y][x].state == .alive {
                     if neighboursCount < 2 {
-                        self.board[y][x] = GameOfLifeCell(state: .willDie)
+                        self.board[y][x].state = .willDie
                     }
 
                     if neighboursCount > 3 {
-                        self.board[y][x] = GameOfLifeCell(state: .willDie)
+                        self.board[y][x].state = .willDie
                     }
                 } else {
                     if neighboursCount == 3 {
-                        self.board[y][x] = GameOfLifeCell(state: .willRevive)
+                        self.board[y][x].state = .willRevive
                     }
                 }
 
             }
         }
 
-        for (y, row) in self.board.enumerated() {
+        let boardSnapshot = self.board
 
-            for (x, cell) in row.enumerated() {
-                if (cell.state == .willDie)
+        for y in 0..<self.boardSize {
+            for x in 0..<self.boardSize {
+                if (boardSnapshot[y][x].state == .willDie)
                 {
-                    self.board[x][y] = GameOfLifeCell(state: .dead)
+                    self.board[y][x].state = .dead
                 }
 
-                if (cell.state == .willRevive)
+                if (boardSnapshot[y][x].state == .willRevive)
                 {
-                    self.board[x][y] = GameOfLifeCell(state: .alive)
+                    self.board[y][x].state = .alive
                 }
             }
         }
@@ -113,11 +118,10 @@ final class GameOfLife {
 
         var drawBoard: [[Bool]] = []
 
-        for row in self.board {
+        for y in 0..<self.boardSize {
             var drawRow: [Bool] = []
-            // pix
-            for cell in row {
-                drawRow.append(cell.state == .alive)
+            for x in 0..<self.boardSize {
+                drawRow.append(self.board[y][x].state == .alive)
             }
             drawBoard.append(drawRow)
         }
