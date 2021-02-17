@@ -147,7 +147,7 @@ final class GameOfLife {
         for y in 0..<self.boardSize {
             for x in 0..<self.boardSize {
 
-                if x < 4 {
+                if x < 2 {
                     let chance = arc4random_uniform(100)
                     if chance > 50 {
                         newBoard[y][x].state = .alive

@@ -67,7 +67,7 @@ class ViewController: NSViewController {
 
         self.squaresView.xyGrid = self.provider()
 
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1/40,
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1/30,
                                           repeats: true,
                                           block: { [weak self] (_) in
                                             guard let strongSelf = self else {
