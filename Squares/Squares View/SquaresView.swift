@@ -17,6 +17,30 @@ final class SquaresView: NSView {
         }
     }
 
+    func gridCoordinates(fromScreen coordinates: CGPoint) -> CGPoint {
+
+        let grid = self.xyGrid
+
+        // if empty - don't bother
+        guard grid.count > 0 else {
+            return .zero
+        }
+
+        let ySize = grid.first?.count ?? 0
+        guard ySize > 0 else {
+            return .zero
+        }
+
+        let drawRect = self.frame
+        let rectSize = CGSize(width: drawRect.width/CGFloat(grid.count),
+                              height: drawRect.height/CGFloat(ySize))
+
+        let xPosition = (coordinates.x/rectSize.width).rounded(.down)
+        let yPosition = (coordinates.y/rectSize.height).rounded(.down)
+
+        return CGPoint(x: xPosition, y: yPosition)
+    }
+
     override func draw(_ dirtyRect: NSRect) {
 
         NSGraphicsContext.saveGraphicsState()

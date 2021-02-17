@@ -171,6 +171,36 @@ final class GameOfLife {
         }
     }
 
+    func addLife(to position: CGPoint) {
+
+        guard position.x < CGFloat(self.boardSize) && position.y < CGFloat(self.boardSize) else {
+            return
+        }
+
+        var evaulateBoard: [[GameOfLifeCell]] = []
+
+        self.boardAccessQueue.sync {
+            evaulateBoard = self.board
+        }
+
+        let size = 4
+
+        for y in -(size)...(size) {
+            for x in -(size-abs(y))..<(size-abs(y)) {
+                let posX = Int(position.x)+x
+                let posY = Int(position.y)+y
+                if (posX > 0 && posY > 0 && posX < self.boardSize && posY < self.boardSize) {
+                    (evaulateBoard[posX][posY]).state = .willRevive
+                }
+            }
+        }
+
+
+        self.boardAccessQueue.sync {
+            self.board = evaulateBoard
+        }
+    }
+
     // 2d array with pixels
     public func currentBoard() -> [[Bool]] {
 
