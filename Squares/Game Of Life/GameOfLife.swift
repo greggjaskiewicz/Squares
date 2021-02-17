@@ -106,7 +106,7 @@ final class GameOfLife {
         return outputRow
     }
 
-    private let boardAccessQueue = DispatchQueue(label: "BoardAccessQueue", attributes: .concurrent)
+    private let boardAccessQueue = DispatchQueue(label: "BoardAccessQueue")
 
     // advance the state
     public func evaluate() {
@@ -136,34 +136,38 @@ final class GameOfLife {
 
         group.wait()
 
-        let boardSnapshot = self.board
+        var newBoard: [[GameOfLifeCell]] = []
+        var boardSnapshot: [[GameOfLifeCell]] = []
+
+        self.boardAccessQueue.sync {
+            newBoard = self.board
+            boardSnapshot = self.board
+        }
 
         for y in 0..<self.boardSize {
             for x in 0..<self.boardSize {
 
                 if x < 4 {
-                    self.boardAccessQueue.sync {
-                        let chance = arc4random_uniform(100)
-                        if chance > 50 {
-                            self.board[y][x].state = .alive
-                        }
+                    let chance = arc4random_uniform(100)
+                    if chance > 50 {
+                        newBoard[y][x].state = .alive
                     }
                 }
 
                 if (boardSnapshot[y][x].state == .willDie)
                 {
-                    self.boardAccessQueue.sync {
-                        self.board[y][x].state = .dead
-                    }
+                    newBoard[y][x].state = .dead
                 }
 
                 if (boardSnapshot[y][x].state == .willRevive)
                 {
-                    self.boardAccessQueue.sync {
-                        self.board[y][x].state = .alive
-                    }
+                    newBoard[y][x].state = .alive
                 }
             }
+        }
+
+        self.boardAccessQueue.sync {
+            self.board = newBoard
         }
     }
 
