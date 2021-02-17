@@ -12,12 +12,22 @@ final class SquaresView: NSView {
     var xyGrid: [[NSColor]] = [] {
         didSet {
             DispatchQueue.main.async {
-                self.setNeedsDisplay(self.frame)
+                self.setNeedsDisplay(self.bounds)
             }
         }
     }
     
     override func draw(_ dirtyRect: NSRect) {
+
+        NSGraphicsContext.saveGraphicsState()
+
+        guard let context = NSGraphicsContext.current?.cgContext else {
+            return
+        }
+
+        let drawRect = self.frame
+
+//        print("\(self.frame)")
 
         let grid = self.xyGrid
         
@@ -25,24 +35,29 @@ final class SquaresView: NSView {
         guard grid.count > 0 else {
             return
         }
+
         let ySize = grid.first?.count ?? 0
         guard ySize > 0 else {
             return
         }
     
         // sizes
-        let rectSize = CGSize(width: self.frame.width/CGFloat((grid.count)),
-                              height: self.frame.height/CGFloat(ySize))
+        let rectSize = CGSize(width: drawRect.width/CGFloat(grid.count),
+                              height: drawRect.height/CGFloat(ySize))
 
         for (x, row) in grid.enumerated() {
             for (y, column) in row.enumerated() {
-                column.setFill()
-                let x = CGFloat(x)*rectSize.width
-                let y = CGFloat(y)*rectSize.height
-                let rect = NSRect(origin: CGPoint(x: x, y: y), size: rectSize)
-                rect.fill()
+
+                context.setFillColor(column.cgColor)
+                let xPoint = (CGFloat(x)*rectSize.width)
+                let yPoint = (CGFloat(y)*rectSize.height)
+                let rect = NSRect(origin: CGPoint(x: xPoint, y: yPoint), size: rectSize)
+
+                context.fill(rect)
             }
         }
 
-      }
+        NSGraphicsContext.restoreGraphicsState()
+
+    }
 }

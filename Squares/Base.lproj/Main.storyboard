@@ -710,6 +710,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="556" height="363"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ocg-8K-ry2">
+                                <rect key="frame" x="0.0" y="0.0" width="556" height="363"/>
+                            </customView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oba-JT-B90">
                                 <rect key="frame" x="134" y="1" width="69" height="32"/>
                                 <constraints>
@@ -731,7 +734,7 @@
                                 </buttonCell>
                             </button>
                             <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xpl-Rm-IyN" customClass="SquaresView" customModule="Squares" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="36" width="556" height="327"/>
+                                <rect key="frame" x="7" y="36" width="542" height="320"/>
                             </customView>
                         </subviews>
                         <constraints>
@@ -739,12 +742,16 @@
                             <constraint firstItem="dNs-G6-s6L" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="EfJ-8a-BuM"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Oba-JT-B90" secondAttribute="trailing" constant="20" symbolic="YES" id="P3d-UU-BN9"/>
                             <constraint firstItem="Oba-JT-B90" firstAttribute="top" secondItem="xpl-Rm-IyN" secondAttribute="bottom" constant="8" id="Wfz-Hb-y4X"/>
-                            <constraint firstItem="xpl-Rm-IyN" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="aMl-aw-G2Q"/>
+                            <constraint firstAttribute="bottom" secondItem="ocg-8K-ry2" secondAttribute="bottom" id="ZOu-HC-1pL"/>
+                            <constraint firstItem="xpl-Rm-IyN" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="7" id="aMl-aw-G2Q"/>
                             <constraint firstItem="Oba-JT-B90" firstAttribute="leading" secondItem="dNs-G6-s6L" secondAttribute="trailing" constant="12" symbolic="YES" id="c4A-lw-9Xp"/>
                             <constraint firstAttribute="bottom" secondItem="dNs-G6-s6L" secondAttribute="bottom" constant="8" id="e0o-5A-o8I"/>
-                            <constraint firstItem="xpl-Rm-IyN" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="esz-bV-a6s"/>
+                            <constraint firstItem="xpl-Rm-IyN" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="7" id="esz-bV-a6s"/>
+                            <constraint firstItem="ocg-8K-ry2" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="exP-CQ-xgd"/>
                             <constraint firstItem="Oba-JT-B90" firstAttribute="top" secondItem="xpl-Rm-IyN" secondAttribute="bottom" constant="8" id="gHb-5z-SAZ"/>
-                            <constraint firstAttribute="trailing" secondItem="xpl-Rm-IyN" secondAttribute="trailing" id="q2g-TH-EhC"/>
+                            <constraint firstItem="ocg-8K-ry2" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="mBs-Al-wFm"/>
+                            <constraint firstAttribute="trailing" secondItem="ocg-8K-ry2" secondAttribute="trailing" id="mSm-3T-v9W"/>
+                            <constraint firstAttribute="trailing" secondItem="xpl-Rm-IyN" secondAttribute="trailing" constant="7" id="q2g-TH-EhC"/>
                         </constraints>
                     </view>
                     <connections>

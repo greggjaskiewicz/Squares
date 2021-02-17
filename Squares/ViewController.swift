@@ -88,6 +88,7 @@ class ViewController: NSViewController {
 
                                             strongSelf.gol.evaluate()
                                             strongSelf.squaresView.xyGrid = strongSelf.provider()
+//                                            strongSelf.squaresView.xyGrid = strongSelf.randomProvider()
                                           })
     }
 
