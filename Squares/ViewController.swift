@@ -14,7 +14,7 @@ class ViewController: NSViewController {
     @IBOutlet var playPauseButton: NSButton!
 
     private var timer: Timer?
-    private static let edgeSize: Int = 100
+    private static let edgeSize: Int = 180
     private var gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 50)
 
     private func randomProvider() -> [[NSColor]] {
@@ -46,19 +46,11 @@ class ViewController: NSViewController {
             for (_, xPix) in golRow.enumerated() {
 
                 if xPix == true {
-//                    let color = NSColor(red: CGFloat(x+100)/255.0,
-//                                        green: CGFloat(x+100)/255.0,
-//                                        blue: CGFloat(x+100)/255.0,
-//                                        alpha: 1)
-//                    row.append(color)
                     row.append(.black)
                 } else {
                     row.append(.white)
                 }
             }
-
-//            row.removeFirst()
-//            row.insert(.red, at: 0)
 
             grid.append(row)
         }

@@ -41,75 +41,100 @@ final class GameOfLife {
         }
     }
 
+    private func evaluateRow(_ y: Int, previousBoard: [[GameOfLifeCell]]) -> [GameOfLifeCell] {
+
+        var outputRow = previousBoard[y]
+
+        for x in 0..<self.boardSize {
+            var neighbours: [GameOfLifeCell] = []
+            // row
+
+            // X Bounds
+            var prevIndex = -1
+            if (y == 0) {
+                prevIndex = 0
+            }
+
+            var nextIndex = 1
+            if (y+1 == self.boardSize) {
+                nextIndex = 0
+            }
+
+            prevIndex += y
+            nextIndex += y
+
+            let rows = previousBoard[(prevIndex)...(nextIndex)]
+
+            var xPrevIndex = -1
+            if (x == 0) {
+                xPrevIndex = 0
+            }
+
+            var xNextIndex = 1
+            if (x+1 == self.boardSize) {
+                xNextIndex = 0
+            }
+
+            xPrevIndex += x
+            xNextIndex += x
+
+            for row in rows {
+                neighbours.append(contentsOf: row[(xPrevIndex)...(xNextIndex)])
+            }
+
+            var neighboursCount = neighbours.compactMap({ ($0.state == .alive) ? 1 : 0 }).reduce(0, +)
+
+            if previousBoard[y][x].state == .alive {
+                neighboursCount -= 1
+            }
+
+            if previousBoard[y][x].state == .alive {
+                if neighboursCount < 2 {
+                    outputRow[x].state = .willDie
+                }
+
+                if neighboursCount > 3 {
+                    outputRow[x].state = .willDie
+                }
+            } else {
+                if neighboursCount == 3 {
+                    outputRow[x].state = .willRevive
+                }
+            }
+        }
+
+        return outputRow
+    }
+
+    private let boardAccessQueue = DispatchQueue(label: "BoardAccessQueue", attributes: .concurrent)
+
     // advance the state
     public func evaluate() {
 
-        let previousBoard = self.board
+        var previousBoard: [[GameOfLifeCell]] = []
 
+        self.boardAccessQueue.sync {
+            previousBoard = self.board
+        }
+        let group = DispatchGroup()
+
+        // wait ...
+        group.wait()
         for y in 0..<self.boardSize {
 
-            // pix
-            for x in 0..<self.boardSize {
-                var neighbours: [GameOfLifeCell] = []
-                // row
+            group.enter()
 
-                // X Bounds
-                var prevIndex = -1
-                if (y == 0) {
-                    prevIndex = 0
+            var outputRow = previousBoard[y]
+            DispatchQueue.global(qos: .userInitiated).async {
+                outputRow = self.evaluateRow(y, previousBoard: previousBoard)
+                self.boardAccessQueue.sync {
+                    self.board[y] = outputRow
                 }
-
-                var nextIndex = 1
-                if (y+1 == self.boardSize) {
-                    nextIndex = 0
-                }
-
-                prevIndex += y
-                nextIndex += y
-
-                let rows = previousBoard[(prevIndex)...(nextIndex)]
-
-                var xPrevIndex = -1
-                if (x == 0) {
-                    xPrevIndex = 0
-                }
-
-                var xNextIndex = 1
-                if (x+1 == self.boardSize) {
-                    xNextIndex = 0
-                }
-
-                xPrevIndex += x
-                xNextIndex += x
-
-                for row in rows {
-                    neighbours.append(contentsOf: row[(xPrevIndex)...(xNextIndex)])
-                }
-
-//                print("\(neighbours.count) \(x) \(y)")
-
-                var neighboursCount = neighbours.compactMap({ ($0.state == .alive) ? 1 : 0 }).reduce(0, +)
-
-                if previousBoard[y][x].state == .alive {
-                    neighboursCount -= 1
-                }
-
-                if previousBoard[y][x].state == .alive {
-                    if neighboursCount < 2 {
-                        self.board[y][x].state = .willDie
-                    }
-
-                    if neighboursCount > 3 {
-                        self.board[y][x].state = .willDie
-                    }
-                } else {
-                    if neighboursCount == 3 {
-                        self.board[y][x].state = .willRevive
-                    }
-                }
-
+                group.leave()
             }
         }
+
+        group.wait()
 
         let boardSnapshot = self.board
 
@@ -117,20 +142,26 @@ final class GameOfLife {
             for x in 0..<self.boardSize {
 
                 if x < 4 {
-                    let chance = arc4random_uniform(100)
-                    if chance > 50 {
-                        self.board[y][x].state = .alive
+                    self.boardAccessQueue.sync {
+                        let chance = arc4random_uniform(100)
+                        if chance > 50 {
+                            self.board[y][x].state = .alive
+                        }
                     }
                 }
 
                 if (boardSnapshot[y][x].state == .willDie)
                 {
-                    self.board[y][x].state = .dead
+                    self.boardAccessQueue.sync {
+                        self.board[y][x].state = .dead
+                    }
                 }
 
                 if (boardSnapshot[y][x].state == .willRevive)
                 {
-                    self.board[y][x].state = .alive
+                    self.boardAccessQueue.sync {
+                        self.board[y][x].state = .alive
+                    }
                 }
             }
         }
@@ -141,12 +172,20 @@ final class GameOfLife {
 
         var drawBoard: [[Bool]] = []
 
-        for y in 0..<self.boardSize {
-            var drawRow: [Bool] = []
-            for x in 0..<self.boardSize {
-                drawRow.append(self.board[y][x].state == .alive)
+        var evaulateBoard: [[GameOfLifeCell]] = []
+
+        self.boardAccessQueue.sync {
+            evaulateBoard = self.board
+        }
+        
+        self.boardAccessQueue.sync {
+            for y in 0..<self.boardSize {
+                var drawRow: [Bool] = []
+                for x in 0..<self.boardSize {
+                    drawRow.append(evaulateBoard[y][x].state == .alive)
+                }
+                drawBoard.append(drawRow)
             }
-            drawBoard.append(drawRow)
         }
 
         return drawBoard
