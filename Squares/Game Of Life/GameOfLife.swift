@@ -28,12 +28,7 @@ final class GameOfLife {
         self.boardSize = boardSize
         for _ in 0..<self.boardSize {
             var row: [GameOfLifeCell] = []
-            for x in 0..<self.boardSize {
-
-//                if x < 4 {
-//                    row.append(GameOfLifeCell(state: .alive))
-//                    continue
-//                }
+            for _ in 0..<self.boardSize {
 
                 let chance = arc4random_uniform(100)
                 if chance > populationPercentage {

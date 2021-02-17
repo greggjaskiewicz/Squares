@@ -12,11 +12,11 @@ final class SquaresView: NSView {
     var xyGrid: [[NSColor]] = [] {
         didSet {
             DispatchQueue.main.async {
-                self.setNeedsDisplay(self.bounds)
+                self.needsDisplay = true
             }
         }
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
 
         NSGraphicsContext.saveGraphicsState()
