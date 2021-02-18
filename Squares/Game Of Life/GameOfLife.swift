@@ -93,7 +93,7 @@ final class GameOfLife {
                     outputRow[x].state = .willDie
                 }
 
-                if neighboursCount > 3 {
+                if neighboursCount > 3 && neighboursCount < 7 {
                     outputRow[x].state = .willDie
                 }
             } else {
@@ -183,14 +183,14 @@ final class GameOfLife {
             evaulateBoard = self.board
         }
 
-        let size = 4
+        let size = 2
 
         for y in -(size)...(size) {
             for x in -(size-abs(y))..<(size-abs(y)) {
                 let posX = Int(position.x)+x
                 let posY = Int(position.y)+y
                 if (posX > 0 && posY > 0 && posX < self.boardSize && posY < self.boardSize) {
-                    (evaulateBoard[posX][posY]).state = .willRevive
+                    (evaulateBoard[posX][posY]).state = .alive
                 }
             }
         }

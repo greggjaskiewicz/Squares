@@ -93,6 +93,8 @@ class ViewController: NSViewController {
                                             }
 
                                             guard strongSelf.playPauseButton.state == .on else {
+                                                // refresh the view, even tho we are not animating
+                                                strongSelf.squaresView.xyGrid = strongSelf.provider()
                                                 return
                                             }
 
