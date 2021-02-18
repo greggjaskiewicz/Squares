@@ -14,8 +14,10 @@ class ViewController: NSViewController {
     @IBOutlet var playPauseButton: NSButton!
 
     private var timer: Timer?
-    private static let edgeSize: Int = 220
-    private var gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 40)
+    private static let edgeSize: Int = 200
+    private static let populationSize: UInt8 = 40
+    private var gol: GameOfLife = GameOfLife(boardSize: ViewController.edgeSize,
+                                             populationPercentage: ViewController.populationSize)
 
     private func randomProvider() -> [[NSColor]] {
         let edgeSize = ViewController.edgeSize
@@ -59,7 +61,8 @@ class ViewController: NSViewController {
     }
 
     @IBAction func reset(_ sender: AnyObject) {
-        self.gol = GameOfLife(boardSize: ViewController.edgeSize, populationPercentage: 40)
+        self.gol = GameOfLife(boardSize: ViewController.edgeSize,
+                              populationPercentage: ViewController.populationSize)
     }
 
     override func mouseDragged(with event: NSEvent) {
